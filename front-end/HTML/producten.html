@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producten - Apothecare</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Producten ophalen via AJAX
+            $.getJSON('../../back-end/database/get-product.php', function(data) {
+                console.log('Ontvangen data:', data);
+                const productList = $('#product-list');
+                
+                // Controleren of er producten zijn
+                if (data.length === 0) {
+                    productList.html('<p>Geen producten gevonden</p>');
+                    return;
+                }
+                
+                // Voor elk product een kaart maken
+                $.each(data, function(index, product) {
+                    const productCard = `
+                        <div class="product-card">
+                            <img src="${product.image_url}" alt="${product.name}" onerror="this.src='../images/placeholder.jpg'">
+                            <h3>${product.name}</h3>
+                            <p class="description">${product.description}</p>
+                            <p class="price">€${product.price}</p>
+                            <p class="stock ${product.stock_status === 'Op voorraad' ? 'in-stock' : 'limited-stock'}">${product.stock_status}</p>
+                            <button class="add-to-cart" data-id="${product.id}">In winkelwagen</button>
+                        </div>
+                    `;
+                    productList.append(productCard);
+                });
+                
+                // Event handler voor "In winkelwagen" knoppen
+                $('.add-to-cart').click(function() {
+                    const productId = $(this).data('id');
+                    alert('Product toegevoegd aan winkelwagen! (Product ID: ' + productId + ')');
+                    // Hier zou je normaal gesproken een functie aanroepen om het product aan de winkelwagen toe te voegen
+                });
+            }).fail(function() {
+                $('#product-list').html('<p>Er is een fout opgetreden bij het laden van de producten.</p>');
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Apothecare</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="producten.html" class="active">Producten</a></li>
+                <li><a href="#">Inloggen</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Onze Producten</h2>
+            <div id="product-list" class="products-container">
+                <!-- Producten worden hier dynamisch geladen -->
+                <p>Producten laden...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
+        <p><a href="#">Algemene voorwaarden</a></p>
+    </footer>
+</body>
+</html>
