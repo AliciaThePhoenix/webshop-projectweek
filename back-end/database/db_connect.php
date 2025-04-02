@@ -1,13 +1,15 @@
 <?php
-$host = 'localhost';
-$username = 'root';
-$password = ''; // Zorg ervoor dat dit overeenkomt met je MySQL-wachtwoord
-$database = 'projectweek_db';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "projectweek_db";
 
-$conn = new mysqli($host, $username, $password, $database);
-
-// Controleer de verbinding
-if ($conn->connect_error) {
-    die("Verbinding mislukt: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Stel de PDO-foutmodus in op uitzondering
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Verbinding mislukt: " . $e->getMessage());
 }
+?>
 ?>

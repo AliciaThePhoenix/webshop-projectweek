@@ -35,45 +35,44 @@
                     <?php
                     // Configuratiebestand opnemen
                     require_once "config.php";
+
                     // Poging om select query uit te voeren
                     $sql = "SELECT * FROM employees";
-                    if($result = $pdo->query($sql)){
-                        if($result->rowCount() > 0){
+                    if ($result = $pdo->query($sql)) {
+                        if ($result->rowCount() > 0) {
                             echo '<table class="table table-bordered table-striped">';
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>#</th>";
-                                        echo "<th>Naam</th>";
-                                        echo "<th>Adres</th>";
-                                        echo "<th>Salaris</th>";
-                                        echo "<th>Actie</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = $result->fetch()){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['name'] . "</td>";
-                                        echo "<td>" . $row['address'] . "</td>";
-                                        echo "<td>" . $row['salary'] . "</td>";
-                                        echo "<td>";
-                                            echo '<a href="read.php?id='. $row['id'] .'" class="mr-3" title="Record Bekijken" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="update.php?id='. $row['id'] .'" class="mr-3" title="Record Bijwerken" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
-                                            echo '<a href="delete.php?id='. $row['id'] .'" title="Record Verwijderen" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
+                            echo "<thead>";
+                            echo "<tr>";
+                            echo "<th>#</th>";
+                            echo "<th>Naam</th>";
+                            echo "<th>Adres</th>";
+                            echo "<th>Salaris</th>";
+                            echo "<th>Actie</th>";
+                            echo "</tr>";
+                            echo "</thead>";
+                            echo "<tbody>";
+                            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['id'] . "</td>";
+                                echo "<td>" . $row['name'] . "</td>";
+                                echo "<td>" . $row['address'] . "</td>";
+                                echo "<td>" . $row['salary'] . "</td>";
+                                echo "<td>";
+                                echo '<a href="read.php?id=' . $row['id'] . '" class="mr-3" title="Record Bekijken" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+                                echo '<a href="update.php?id=' . $row['id'] . '" class="mr-3" title="Record Bijwerken" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
+                                echo '<a href="delete.php?id=' . $row['id'] . '" title="Record Verwijderen" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                            echo "</tbody>";
                             echo "</table>";
-                            // Resultaat vrijgeven
-                            unset($result);
-                        } else{
+                        } else {
                             echo '<div class="alert alert-danger"><em>Geen records gevonden.</em></div>';
                         }
-                    } else{
+                    } else {
                         echo "Oeps! Er is iets misgegaan. Probeer het later opnieuw.";
                     }
-                    
+
                     // Verbinding sluiten
                     unset($pdo);
                     ?>

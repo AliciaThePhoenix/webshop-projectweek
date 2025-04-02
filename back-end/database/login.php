@@ -2,11 +2,6 @@
 session_start();
 include 'db_connect.php';
 
-if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
-    exit;
-}
-
 // Functie om in te loggen
 function login($username, $password, $conn) {
     $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
