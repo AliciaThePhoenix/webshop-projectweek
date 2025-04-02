@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connect.php';
+include 'db_connect.php'; // Zorg ervoor dat $pdo correct wordt geïnitialiseerd
 
 // Variabelen initialiseren
 $username = $password = $confirm_password = "";
@@ -13,19 +13,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_err = "Voer een gebruikersnaam in.";
     } else {
         // Controleer of de gebruikersnaam al bestaat
-        $sql = "SELECT id FROM users WHERE username = ?";
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("s", $param_username);
+        $sql = "SELECT id FROM users WHERE username = :username";
+        if ($stmt = $pdo->prepare($sql)) {
+            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
             $param_username = trim($_POST["username"]);
             $stmt->execute();
             $stmt->store_result();
 
-            if ($stmt->num_rows == 1) {
+            if ($stmt->rowCount() == 1) {
                 $username_err = "Deze gebruikersnaam is al in gebruik.";
             } else {
                 $username = trim($_POST["username"]);
             }
-            $stmt->close();
+            unset($stmt);
         }
     }
 
@@ -51,10 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Controleer invoerfouten voordat gegevens worden ingevoerd
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
         // Bereid een insert statement voor
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
 
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("ss", $param_username, $param_password);
+        if ($stmt = $pdo->prepare($sql)) {
+            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+            $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
 
             // Parameters instellen
             $param_username = $username;
@@ -67,12 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo "Oeps! Er is iets misgegaan. Probeer het later opnieuw.";
             }
-            $stmt->close();
+            unset($stmt);
         }
     }
 
     // Verbinding sluiten
-    $conn->close();
+    unset($pdo);
 }
 ?>
 

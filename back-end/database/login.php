@@ -1,16 +1,15 @@
 <?php
 session_start();
-include 'db_connect.php';
+include 'db_connect.php'; // Zorg ervoor dat $pdo correct wordt geïnitialiseerd
 
 // Functie om in te loggen
-function login($username, $password, $conn) {
-    $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
+function login($username, $password, $pdo) {
+    $stmt = $pdo->prepare("SELECT id, password, role FROM users WHERE username = :username");
+    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+    if ($user) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
@@ -24,14 +23,12 @@ function login($username, $password, $conn) {
     } else {
         echo "Gebruiker niet gevonden.";
     }
-
-    $stmt->close();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    login($username, $password, $conn);
+    login($username, $password, $pdo); // Gebruik $pdo in plaats van $conn
 }
 ?>
 <!DOCTYPE html>

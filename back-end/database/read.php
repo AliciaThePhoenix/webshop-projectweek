@@ -1,22 +1,22 @@
 <?php
 // Controleer of het id-parameter bestaat voordat verder wordt gegaan
-if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
     // Configuratiebestand opnemen
     require_once "config.php";
     
     // Bereid een select statement voor
     $sql = "SELECT * FROM employees WHERE id = :id";
     
-    if($stmt = $pdo->prepare($sql)){
+    if ($stmt = $pdo->prepare($sql)) {
         // Variabelen binden aan de voorbereide statement als parameters
-        $stmt->bindParam(":id", $param_id);
+        $stmt->bindParam(":id", $param_id, PDO::PARAM_INT);
         
         // Parameters instellen
         $param_id = trim($_GET["id"]);
         
         // Poging om de voorbereide statement uit te voeren
-        if($stmt->execute()){
-            if($stmt->rowCount() == 1){
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() == 1) {
                 /* Haal het resultaat op als een associatieve array. Aangezien de 
                 resultaatset slechts één rij bevat, is een while-lus niet nodig */
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,13 +25,12 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $name = $row["name"];
                 $address = $row["address"];
                 $salary = $row["salary"];
-            } else{
+            } else {
                 // URL bevat geen geldig id-parameter. Doorverwijzen naar foutpagina
                 header("location: error.php");
                 exit();
             }
-            
-        } else{
+        } else {
             echo "Oeps! Er is iets misgegaan. Probeer het later opnieuw.";
         }
     }
@@ -41,7 +40,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     
     // Verbinding sluiten
     unset($pdo);
-} else{
+} else {
     // URL bevat geen id-parameter. Doorverwijzen naar foutpagina
     header("location: error.php");
     exit();
