@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
             $param_username = trim($_POST["username"]);
             $stmt->execute();
-            $stmt->store_result();
 
+            // Gebruik rowCount() om te controleren of er een resultaat is
             if ($stmt->rowCount() == 1) {
                 $username_err = "Deze gebruikersnaam is al in gebruik.";
             } else {
