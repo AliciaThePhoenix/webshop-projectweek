@@ -30,23 +30,22 @@
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
                         <h2 class="pull-left">klanten Details</h2>
-                        <a href="create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Nieuwe Werknemer Toevoegen</a>
                     </div>
                     <?php
                     // Configuratiebestand opnemen
                     require_once "config.php";
 
                     // Poging om select query uit te voeren
-                    $sql = "SELECT * FROM employees";
+                    $sql = "SELECT * FROM users";
                     if ($result = $pdo->query($sql)) {
                         if ($result->rowCount() > 0) {
                             echo '<table class="table table-bordered table-striped">';
                             echo "<thead>";
                             echo "<tr>";
                             echo "<th>#</th>";
-                            echo "<th>Naam</th>";
-                            echo "<th>Adres</th>";
-                            echo "<th>Salaris</th>";
+                            echo "<th>Gebruikersnaam</th>";
+                            echo "<th>Rol</th>";
+                            echo "<th>Aangemaakt op</th>";
                             echo "<th>Actie</th>";
                             echo "</tr>";
                             echo "</thead>";
@@ -54,9 +53,9 @@
                             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['address'] . "</td>";
-                                echo "<td>" . $row['salary'] . "</td>";
+                                echo "<td>" . $row['username'] . "</td>";
+                                echo "<td>" . $row['role'] . "</td>";
+                                echo "<td>" . $row['created_at'] . "</td>";
                                 echo "<td>";
                                 echo '<a href="read.php?id=' . $row['id'] . '" class="mr-3" title="Record Bekijken" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
                                 echo '<a href="update.php?id=' . $row['id'] . '" class="mr-3" title="Record Bijwerken" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
