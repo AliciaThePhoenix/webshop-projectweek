@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Inloggen</h1>
+    <form action="/login" method="POST">
+        <label for="username">Gebruikersnaam:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Wachtwoord:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Inloggen">
+    </form>
+
+    <p>Geen account? <a href="/register">Registreer hier</a></p>
+    <p><a href="/forgot-password">Wachtwoord vergeten?</a></p>
+    <p><a href="/">Terug naar de homepage</a></p>
+</body>
+</html>
