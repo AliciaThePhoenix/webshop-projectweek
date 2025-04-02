@@ -33,7 +33,7 @@
                     </div>
                     <?php
                     // Configuratiebestand opnemen
-                    require_once "config.php";
+                    require_once "config2.php";
 
                     // Poging om select query uit te voeren
                     $sql = "SELECT * FROM users";

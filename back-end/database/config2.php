@@ -1,5 +1,5 @@
 <?php
-$host = 'localhost';
+$host = '127.0.0.1';
 $db = 'projectweek_db'; // Ensure this matches the correct database name
 $user = 'root'; // Default XAMPP username
 $pass = ''; // Default XAMPP password (empty)
@@ -16,3 +16,4 @@ try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
