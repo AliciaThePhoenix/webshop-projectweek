@@ -8,12 +8,29 @@
   <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
   <script src="../../components/stadium.js" defer></script>
   <script src="../../js/session.js"></script>
+  
+  <style>
+    /* Logo styling */
+    .logo-img {
+            height: 120px;  /* Increased from 80px to 120px */
+            width: auto;
+            margin: 10px 0; /* Added margin for better spacing */
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;  /* Increased from 60px to 90px */
+            }
+    }
+  </style>
 </head>
 <body>
   <!-- Header contents -->
   <header>
     <div class="header-content">
-      <h1>Apothecare</h1>
+      <a href="../homepage/index.html">
+        <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+      </a>
       <nav>
         <ul>
           <li><a href="../homepage/index.html">Home</a></li>

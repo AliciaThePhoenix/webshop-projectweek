@@ -20,7 +20,16 @@
   .header-content {
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: space-between;
+  }
+  
+  /* Updated navigation positioning */
+  header nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
   }
   
   header h1 {
