@@ -1,121 +1,103 @@
 <?php
+// Start de sessie
 session_start();
-include 'db_connect.php'; // Zorg ervoor dat $pdo correct wordt geïnitialiseerd
 
-// Variabelen initialiseren
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+// Schakel foutmeldingen in voor ontwikkeling
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Formuliergegevens verwerken wanneer het formulier wordt ingediend
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Gebruikersnaam valideren
-    if (empty(trim($_POST["username"]))) {
-        $username_err = "Voer een gebruikersnaam in.";
-    } else {
-        // Controleer of de gebruikersnaam al bestaat
-        $sql = "SELECT id FROM users WHERE username = :username";
-        if ($stmt = $pdo->prepare($sql)) {
-            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-            $param_username = trim($_POST["username"]);
-            $stmt->execute();
+// Headers voor JSON response
+header('Content-Type: application/json');
 
-            // Gebruik rowCount() om te controleren of er een resultaat is
-            if ($stmt->rowCount() == 1) {
-                $username_err = "Deze gebruikersnaam is al in gebruik.";
-            } else {
-                $username = trim($_POST["username"]);
-            }
-            unset($stmt);
-        }
+// Controleer of het verzoek een POST-verzoek is
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    echo json_encode(["success" => false, "message" => "Alleen POST-verzoeken worden geaccepteerd"]);
+    exit;
+}
+
+// Controleer of de benodigde velden zijn ingevuld
+if (empty($_POST["username"]) || empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"])) {
+    echo json_encode(["success" => false, "message" => "Alle verplichte velden moeten worden ingevuld"]);
+    exit;
+}
+
+// Valideer e-mail
+if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["success" => false, "message" => "Ongeldig e-mailadres"]);
+    exit;
+}
+
+// Controleer of wachtwoorden overeenkomen
+if ($_POST["password"] !== $_POST["confirm_password"]) {
+    echo json_encode(["success" => false, "message" => "Wachtwoorden komen niet overeen"]);
+    exit;
+}
+
+// Controleer wachtwoordlengte
+if (strlen($_POST["password"]) < 6) {
+    echo json_encode(["success" => false, "message" => "Wachtwoord moet minimaal 6 tekens bevatten"]);
+    exit;
+}
+
+// Verbinding maken met de database
+require_once "config.php";
+
+try {
+    // Gebruik PDO voor veiligere database-interactie
+    $dsn = "mysql:host=$host;dbname=$database;charset=utf8mb4";
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+    $pdo = new PDO($dsn, $username, $password, $options);
+    
+    // Controleer of de gebruikersnaam al bestaat
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE username = :username");
+    $stmt->execute(["username" => $_POST["username"]]);
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(["success" => false, "message" => "Gebruikersnaam is al in gebruik"]);
+        exit;
     }
-
-    // Wachtwoord valideren
-    if (empty(trim($_POST["password"]))) {
-        $password_err = "Voer een wachtwoord in.";
-    } elseif (strlen(trim($_POST["password"])) < 6) {
-        $password_err = "Het wachtwoord moet minimaal 6 tekens bevatten.";
-    } else {
-        $password = trim($_POST["password"]);
+    
+    // Controleer of het e-mailadres al bestaat
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+    $stmt->execute(["email" => $_POST["email"]]);
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(["success" => false, "message" => "E-mailadres is al in gebruik"]);
+        exit;
     }
-
-    // Bevestig wachtwoord valideren
-    if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Bevestig het wachtwoord.";
-    } else {
-        $confirm_password = trim($_POST["confirm_password"]);
-        if (empty($password_err) && ($password != $confirm_password)) {
-            $confirm_password_err = "Wachtwoorden komen niet overeen.";
-        }
-    }
-
-    // Controleer invoerfouten voordat gegevens worden ingevoerd
-    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
-        // Bereid een insert statement voor
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
-
-        if ($stmt = $pdo->prepare($sql)) {
-            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-            $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
-
-            // Parameters instellen
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Wachtwoord hashen
-
-            if ($stmt->execute()) {
-                // Registratie succesvol, doorverwijzen naar loginpagina
-                header("location: login.php");
-                exit();
-            } else {
-                echo "Oeps! Er is iets misgegaan. Probeer het later opnieuw.";
-            }
-            unset($stmt);
-        }
-    }
-
-    // Verbinding sluiten
-    unset($pdo);
+    
+    // Voeg de gebruiker toe aan de database
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, first_name, last_name, address, city, postal_code, phone) 
+                          VALUES (:username, :email, :password, :first_name, :last_name, :address, :city, :postal_code, :phone)");
+    
+    // Maak een gehashed wachtwoord
+    $hashed_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    
+    // Bind parameters
+    $stmt->bindParam(":username", $_POST["username"]);
+    $stmt->bindParam(":email", $_POST["email"]);
+    $stmt->bindParam(":password", $hashed_password);
+    $stmt->bindParam(":first_name", $_POST["first_name"]);
+    $stmt->bindParam(":last_name", $_POST["last_name"]);
+    $stmt->bindParam(":address", $_POST["address"]);
+    $stmt->bindParam(":city", $_POST["city"]);
+    $stmt->bindParam(":postal_code", $_POST["postal_code"]);
+    $stmt->bindParam(":phone", $_POST["phone"]);
+    
+    // Voer query uit
+    $stmt->execute();
+    
+    // Automatisch inloggen na registratie
+    $_SESSION["loggedin"] = true;
+    $_SESSION["id"] = $pdo->lastInsertId();
+    $_SESSION["username"] = $_POST["username"];
+    
+    echo json_encode(["success" => true, "message" => "Registratie succesvol"]);
+    
+} catch (PDOException $e) {
+    // Database fout
+    echo json_encode(["success" => false, "message" => "Database fout: " . $e->getMessage()]);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registreren</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .wrapper {
-            width: 400px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
-    <div class="wrapper">
-        <h2>Registreren</h2>
-        <p>Vul dit formulier in om een account aan te maken.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Gebruikersnaam</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
-            </div>
-            <div class="form-group">
-                <label>Wachtwoord</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <label>Bevestig Wachtwoord</label>
-                <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Registreren">
-                <a href="login.php" class="btn btn-secondary ml-2">Annuleren</a>
-            </div>
-        </form>
-    </div>
-</body>
-</html>

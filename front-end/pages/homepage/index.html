@@ -14,6 +14,9 @@
   <!-- Components -->
   <!-- Good luck ever finding a way not having to write this-->
   <script src="../../components/stadium.js" defer></script>
+  
+  <!-- Session management -->
+  <script src="../../js/session.js"></script>
 </head>
 <body>
 
@@ -24,7 +27,7 @@
       <nav>
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="#">Producten</a></li>
+          <li><a href="../../HTML/producten.html">Producten</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
@@ -33,12 +36,13 @@
         <label for="profile-toggle" class="profile-btn">&#128100;</label>
         <div class="profile-menu">
           <ul>
-            <li><a href="#">Log in</a></li>
-            <li><a href="#">Registratie</a></li>
+            <li><a href="../login/login.html">Log in</a></li>
+            <li><a href="../register/register.html">Registratie</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <div id="user-greeting" class="user-greeting"></div>
   </header>
 
   <!-- Main Content -->

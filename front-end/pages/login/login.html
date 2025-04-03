@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inloggen - Apothecare Webshop</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
+  <script src="../../components/stadium.js" defer></script>
+  <script src="../../js/session.js"></script>
+</head>
+<body>
+  <!-- Header contents -->
+  <header>
+    <div class="header-content">
+      <h1>Apothecare</h1>
+      <nav>
+        <ul>
+          <li><a href="../homepage/index.html">Home</a></li>
+          <li><a href="../../HTML/producten.html">Producten</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="profile-container">
+        <input type="checkbox" id="profile-toggle" hidden>
+        <label for="profile-toggle" class="profile-btn">&#128100;</label>
+        <div class="profile-menu">
+          <ul>
+            <li><a href="login.html">Log in</a></li>
+            <li><a href="#">Registratie</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="centered-container">
+      <section class="login-section">
+        <h2>Inloggen bij Apothecare</h2>
+        <div id="login-message"></div>
+        <form id="login-form" action="../../../back-end/database/login.php" method="post">
+          <div class="form-group">
+            <label for="username">Gebruikersnaam of E-mail</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Wachtwoord</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Inloggen</button>
+            <p>Nog geen account? <a href="../register/register.html">Registreer nu</a></p>
+          </div>
+        </form>
+      </section>
+    </div>
+    
+    
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
+    <p><a href="#">Algemene voorwaarden</a></p>
+  </footer>
+
+  <!-- JS Code -->
+  <script src="login.js"></script>
+</body>
+</html>

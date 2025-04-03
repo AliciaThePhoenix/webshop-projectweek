@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connect.php'; // Zorg ervoor dat $pdo correct wordt geïnitialiseerd
+include 'db_connect.php'; 
 
 // Variabelen initialiseren
 $username = $password = $confirm_password = "";
