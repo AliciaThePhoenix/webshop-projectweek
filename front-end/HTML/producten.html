@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producten - Apothecare</title>
+    <link rel="stylesheet" href="../HTML/Product.css">
+    <!-- Add Bootstrap for better styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vue.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Custom styles for search and filters */
+        .search-filter-vue {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .search-bar-vue {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            border-radius: 4px;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+        .search-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-button:hover {
+            background-color: #45a049;
+        }
+        .filter-section {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .filter-title {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .filter-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .filter-select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price-input {
+            width: 100px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .apply-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .reset-button {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ced4da;
+        }
+        .filter-button {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Logo styling */
+        .logo-img {
+            height: 120px;  /* Increased from 80px to 120px */
+            width: auto;
+            margin: 10px 0; /* Added margin for better spacing */
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;  /* Increased from 60px to 90px */
+            }
+        }
+        
+        /* Shopping Cart Styles */
+        .cart-container {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Animation for add to cart */
+        @keyframes cartBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .cart-animation {
+            animation: cartBounce 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="../pages/homepage/index.html">
+                <img src="../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="../pages/homepage/index.html">Home</a></li>
+                    <li><a href="producten.html" class="active">Producten</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <div class="profile-container">
+                    <input type="checkbox" id="profile-toggle" hidden>
+                    <label for="profile-toggle" class="profile-btn">&#128100;</label>
+                    <div class="profile-menu">
+                        <ul>
+                            <!-- Will be filled by session.js -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- Shopping Cart Icon -->
+                <div class="cart-container">
+                    <a href="../pages/cart/cart.html" class="cart-icon">
+                        &#128722; <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="user-greeting" class="user-greeting"></div>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="mb-4 text-center">Onze Producten</h2>
+            
+            <!-- Vue app for search and filters -->
+            <div id="search-filter-app" class="container">
+                <div class="search-filter-vue">
+                    <!-- Search Bar -->
+                    <div class="search-bar-vue">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                class="form-control search-input" 
+                                placeholder="Zoek naar producten..." 
+                                v-model="searchQuery"
+                                @keyup.enter="searchProducts">
+                            <button 
+                                class="btn search-button" 
+                                @click="searchProducts">Zoeken</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Options -->
+                    <div class="filter-section">
+                        <h4 class="filter-title">Filters</h4>
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label class="filter-label" for="category-filter">Categorie</label>
+                                <select id="category-filter" class="form-select filter-select" v-model="selectedCategory">
+                                    <option value="all">Alle categorieën</option>
+                                    <option value="hoofdpijn pillen">Hoofdpijn pillen</option>
+                                    <option value="pijnstillers">Pijnstillers</option>
+                                    <option value="verkoudheid">Verkoudheid</option>
+                                    <option value="vitamines">Vitamines</option>
+                                    <option value="huidverzorging">Huidverzorging</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Prijsklasse</label>
+                                <div class="price-inputs">
+                                    <input type="number" class="form-control price-input" placeholder="Min €" v-model="minPrice">
+                                    <span>tot</span>
+                                    <input type="number" class="form-control price-input" placeholder="Max €" v-model="maxPrice">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-buttons">
+                            <button class="filter-button apply-button" @click="applyFilters">Filters toepassen</button>
+                            <button class="filter-button reset-button" @click="resetFilters">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading indicator -->
+            <div id="loading-indicator" class="loading-indicator">Producten laden...</div>
+            
+            <!-- Product Container -->
+            <div id="product-list" class="products-container">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
+        <p><a href="#">Algemene voorwaarden</a></p>
+    </footer>
+    
+    <!-- Include session management and cart management -->
+    <script src="../js/session.js"></script>
+    <script src="../js/cart.js"></script>
+    
+    <!-- Vue.js Application Script -->
+    <script>
+        // Initialize Vue app for search and filters
+        const searchFilterApp = new Vue({
+            el: '#search-filter-app',
+            data: {
+                searchQuery: '',
+                selectedCategory: 'all',
+                minPrice: '',
+                maxPrice: ''
+            },
+            methods: {
+                searchProducts() {
+                    // Signal to jQuery code to perform search
+                    $(document).trigger('vue-search', this.searchQuery);
+                },
+                applyFilters() {
+                    // Signal to jQuery code to apply filters
+                    const filterData = {
+                        category: this.selectedCategory,
+                        minPrice: this.minPrice,
+                        maxPrice: this.maxPrice
+                    };
+                    $(document).trigger('vue-filter', filterData);
+                },
+                resetFilters() {
+                    // Reset all filters
+                    this.selectedCategory = 'all';
+                    this.minPrice = '';
+                    this.maxPrice = '';
+                    
+                    // Signal to jQuery code to reset
+                    $(document).trigger('vue-reset');
+                }
+            }
+        });
+
+        // jQuery code for product functionality
+        $(document).ready(function() {
+            // Declare products array globally
+            let allProducts = [];
+            
+            // Update cart count when page loads
+            updateCartCount();
+            
+            // Load products function
+            function loadProducts() {
+                // Show loading indicator
+                $('#loading-indicator').show();
+                
+                // Clear any existing products
+                $('#product-list').empty();
+                
+                // Producten ophalen via AJAX
+                $.getJSON('../../back-end/database/get-product.php', function(data) {
+                    console.log('Ontvangen data:', data);
+                    
+                    // Store products globally
+                    allProducts = data;
+                    
+                    // Hide loading indicator
+                    $('#loading-indicator').hide();
+                    
+                    // Controleren of er producten zijn
+                    if (data.length === 0) {
+                        $('#product-list').html('<p>Geen producten gevonden</p>');
+                        return;
+                    }
+                    
+                    // Display products
+                    displayProducts(allProducts);
+                }).fail(function() {
+                    $('#loading-indicator').hide();
+                    $('#product-list').html('<p>Er is een fout opgetreden bij het laden van de producten.</p>');
+                });
+            }
+            
+            // Function to display products
+            function displayProducts(products) {
+                const productList = $('#product-list');
+                productList.empty();
+                
+                if (products.length === 0) {
+                    productList.html('<p>Geen producten gevonden die aan uw criteria voldoen.</p>');
+                    return;
+                }
+                
+                // Voor elk product een kaart maken
+                $.each(products, function(index, product) {
+                    const productCard = `
+                        <div class="product-card">
+                            <img src="${product.image_url}" alt="${product.name}" onerror="this.src='../images/placeholder.jpg'">
+                            <h3>${product.name}</h3>
+                            <p class="description">${product.description}</p>
+                            <p class="price">€${product.price}</p>
+                            <p class="stock ${product.stock_status === 'Op voorraad' ? 'in-stock' : 'limited-stock'}">${product.stock_status}</p>
+                            <button class="add-to-cart" data-id="${product.id}">In winkelwagen</button>
+                        </div>
+                    `;
+                    productList.append(productCard);
+                });
+                
+                // Event handler voor "In winkelwagen" knoppen
+                $('.add-to-cart').click(function() {
+                    const productId = $(this).data('id');
+                    const product = allProducts.find(p => p.id == productId);
+                    
+                    if (product) {
+                        // Add to cart
+                        addToCart(product);
+                        
+                        // Show animation feedback
+                        $('.cart-icon').addClass('cart-animation');
+                        setTimeout(() => {
+                            $('.cart-icon').removeClass('cart-animation');
+                        }, 500);
+                        
+                        // Show success message instead of alert
+                        const button = $(this);
+                        const originalText = button.text();
+                        button.text('Toegevoegd!').addClass('added');
+                        
+                        setTimeout(() => {
+                            button.text(originalText).removeClass('added');
+                        }, 1500);
+                    }
+                });
+            }
+            
+            // Listen for Vue app events
+            $(document).on('vue-search', function(event, query) {
+                if (!query) {
+                    displayProducts(allProducts);
+                    return;
+                }
+                
+                // Filter products based on search query
+                const filteredProducts = allProducts.filter(product => {
+                    return product.name.toLowerCase().includes(query.toLowerCase()) || 
+                           product.description.toLowerCase().includes(query.toLowerCase());
+                });
+                
+                displayProducts(filteredProducts);
+            });
+            
+            $(document).on('vue-filter', function(event, filterData) {
+                const category = filterData.category;
+                const minPrice = parseFloat(filterData.minPrice) || 0;
+                const maxPrice = parseFloat(filterData.maxPrice) || Number.MAX_SAFE_INTEGER;
+                
+                // Filter products based on criteria
+                const filteredProducts = allProducts.filter(product => {
+                    const productPrice = parseFloat(product.price);
+                    
+                    // Improved category matching - case insensitive and checks if category is contained in product category
+                    const categoryMatch = 
+                        category === 'all' || 
+                        (product.category && product.category.toLowerCase().includes(category.toLowerCase())) ||
+                        (product.name && product.name.toLowerCase().includes(category.toLowerCase()));
+                    
+                    // Check price range
+                    const priceMatch = productPrice >= minPrice && productPrice <= maxPrice;
+                    
+                    return categoryMatch && priceMatch;
+                });
+                
+                displayProducts(filteredProducts);
+            });
+            
+            $(document).on('vue-reset', function() {
+                // Show all products
+                displayProducts(allProducts);
+            });
+            
+            // Initial load of products
+            loadProducts();
+        });
+    </script>
+</body>
+</html>

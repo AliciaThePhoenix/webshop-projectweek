@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apothecare Webshop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
+  
+  <!-- Frameworks -->
+  <!-- Used to individually edit characters from a text -->
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- Components -->
+  <!-- Good luck ever finding a way not having to write this-->
+  <script src="../../components/stadium.js" defer></script>
+  
+  <!-- Session management -->
+  <script src="../../js/session.js"></script>
+  
+  <style>
+    /* Logo styling */
+    .logo-img {
+            height: 120px;  /* Increased from 80px to 120px */
+            width: auto;
+            margin: 10px 0; /* Added margin for better spacing */
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;  /* Increased from 60px to 90px */
+            }
+    }
+    
+    /* Group user controls together like in other pages */
+    .user-controls {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Shopping Cart Styling - Updated to match products page */
+    .cart-container {
+        margin-left: 15px;
+        position: relative;
+    }
+    
+    .cart-icon {
+        font-size: 24px;
+        text-decoration: none;
+        color: #333;
+        position: relative;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    @keyframes cartBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .cart-animation {
+        animation: cartBounce 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header contents -->
+  <header>
+    <div class="header-content">
+      <a href="index.html">
+        <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="../../HTML/producten.html">Producten</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="user-controls">
+        <div class="profile-container">
+          <input type="checkbox" id="profile-toggle" hidden>
+          <label for="profile-toggle" class="profile-btn">&#128100;</label>
+          <div class="profile-menu">
+            <ul>
+              <li><a href="../login/login.html">Log in</a></li>
+              <li><a href="../register/register.html">Registratie</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Shopping Cart Icon -->
+        <div class="cart-container">
+          <a href="../cart/cart.html" class="cart-icon">
+            &#128722; <span class="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="user-greeting" class="user-greeting"></div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="centered-container">
+      <section class="search-section">
+        <div class="animated-text-container">
+          <div class="animated-text" data-splitting>Wat wilt u vandaag?</div>
+        </div>
+        <div class="search-container">
+          <input type="text" placeholder="Zoek hier...">
+        </div>
+      </section>
+    </div>
+
+    <spawn-stadium count="3"></spawn-stadium>
+    
+    <!-- Recommended section -->
+    <section class="recommended-section">
+      <h2>Aanbevolen</h2>
+      <div id="recommended-container" class="recommended-container"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
+    <p><a href="#">Algemene voorwaarden</a></p>
+  </footer>
+
+  <!-- JS Code -->
+  <script src="JS/textFX.js"></script>
+  <script src="JS/aanbevolen.js"></script>
+  <script src="../../js/cart.js"></script>
+</body>
+</html>

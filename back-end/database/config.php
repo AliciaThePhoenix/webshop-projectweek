@@ -1,11 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projectweek_db";
+// Database configuratie
+$host = "localhost";
+$username = "root"; 
+$password = ""; 
+$database = "apothecare_webshop";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Database verbinding maken
+$conn = new mysqli($host, $username, $password, $database);
 
+// Verbinding controleren
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

@@ -1,0 +1,227 @@
+/* Reset and basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    font-family: Arial, sans-serif;
+    height: 100%;
+  }
+  
+  /* Header styling */
+  header {
+    background-color: #f4f4f4;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  /* Updated navigation positioning */
+  header nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+  }
+  
+  header h1 {
+    font-size: 24px;
+  }
+  
+  /* Navigation styling */
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  /* Profile container and dropdown styling using checkbox toggle */
+  .profile-container {
+    position: relative;
+  }
+  
+  .profile-btn {
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 120px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .profile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .profile-menu ul li {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .profile-menu ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+  
+  #profile-toggle:checked ~ .profile-menu {
+    max-height: 150px; /* Adjust as needed */
+  }
+  
+  /* Centered container for search section */
+  .centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* Ensure the search section stays centered */
+  }
+  
+  /* Search section styling */
+  .search-section {
+    text-align: center;
+    margin-bottom: 30px; /* Provide spacing for the recommended section */
+  }
+  
+  .animated-text-container {
+    margin-bottom: 15px;
+    margin-top: 20%;
+    color: #666;
+    font-size: 52px;
+    opacity: 0.9;
+  }
+  
+  .animated-text .char {
+    display: inline-block;
+    transform: translate(var(--offset-x), var(--offset-y));
+    opacity: 0;
+    animation: letterAnimation 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes letterAnimation {
+    to {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+  
+  .search-container input[type="text"] {
+    width: 450px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  
+  /* Recommended section styling */
+  .recommended-section {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .recommended-section h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #333;
+  }
+  
+  .recommended-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+  }
+  
+  .recommended-item {
+    flex: 0 0 auto;
+    width: 200px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .recommended-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .recommended-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .recommended-item p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Footer styling */
+  footer {
+    background-color: #f4f4f4;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  /* User greeting styling */
+  .user-greeting {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+    display: none;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Additional styles for logged-in state */
+  body.logged-in .profile-btn {
+    color: #4CAF50;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }

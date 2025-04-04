@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inloggen - Apothecare Webshop</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
+  <script src="../../components/stadium.js" defer></script>
+  <script src="../../js/session.js"></script>
+  
+  <style>
+    /* Logo styling */
+    .logo-img {
+            height: 120px;  /* Increased from 80px to 120px */
+            width: auto;
+            margin: 10px 0; /* Added margin for better spacing */
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;  /* Increased from 60px to 90px */
+            }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header contents -->
+  <header>
+    <div class="header-content">
+      <a href="../homepage/index.html">
+        <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+      </a>
+      <nav>
+        <ul>
+          <li><a href="../homepage/index.html">Home</a></li>
+          <li><a href="../../HTML/producten.html">Producten</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="profile-container">
+        <input type="checkbox" id="profile-toggle" hidden>
+        <label for="profile-toggle" class="profile-btn">&#128100;</label>
+        <div class="profile-menu">
+          <ul>
+            <li><a href="login.html">Log in</a></li>
+            <li><a href="#">Registratie</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Shopping Cart Icon -->
+      <div class="cart-container">
+        <a href="../cart/cart.html" class="cart-icon">
+          &#128722; <span class="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="centered-container">
+      <section class="login-section">
+        <h2>Inloggen bij Apothecare</h2>
+        <div id="login-message"></div>
+        <form id="login-form" action="../../../back-end/database/login.php" method="post">
+          <div class="form-group">
+            <label for="username">Gebruikersnaam of E-mail</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Wachtwoord</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Inloggen</button>
+            <p>Nog geen account? <a href="../register/register.html">Registreer nu</a></p>
+          </div>
+        </form>
+      </section>
+    </div>
+    
+    
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
+    <p><a href="#">Algemene voorwaarden</a></p>
+  </footer>
+
+  <!-- JS Code -->
+  <script src="login.js"></script>
+  <script src="../../js/cart.js"></script>
+</body>
+</html>
