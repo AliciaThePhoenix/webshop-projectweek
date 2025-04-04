@@ -21,6 +21,35 @@
                 height: 90px;  /* Increased from 60px to 90px */
             }
     }
+    
+    /* Updated header layout - navigation to the left */
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+    
+    header nav {
+        margin-left: 20px;
+        margin-right: auto;
+    }
+    
+    header nav ul {
+        display: flex;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+    
+    /* Group user controls together */
+    .user-controls {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Fix cart container positioning */
+    .cart-container {
+        margin-left: 15px;
+    }
   </style>
 </head>
 <body>
@@ -37,21 +66,23 @@
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
-      <div class="profile-container">
-        <input type="checkbox" id="profile-toggle" hidden>
-        <label for="profile-toggle" class="profile-btn">&#128100;</label>
-        <div class="profile-menu">
-          <ul>
-            <li><a href="../login/login.html">Log in</a></li>
-            <li><a href="register.html">Registratie</a></li>
-          </ul>
+      <div class="user-controls">
+        <div class="profile-container">
+          <input type="checkbox" id="profile-toggle" hidden>
+          <label for="profile-toggle" class="profile-btn">&#128100;</label>
+          <div class="profile-menu">
+            <ul>
+              <li><a href="../login/login.html">Log in</a></li>
+              <li><a href="register.html">Registratie</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <!-- Shopping Cart Icon -->
-      <div class="cart-container">
-        <a href="../cart/cart.html" class="cart-icon">
-          &#128722; <span class="cart-count">0</span>
-        </a>
+        <!-- Shopping Cart Icon -->
+        <div class="cart-container">
+          <a href="../cart/cart.html" class="cart-icon">
+            &#128722; <span class="cart-count">0</span>
+          </a>
+        </div>
       </div>
     </div>
   </header>
