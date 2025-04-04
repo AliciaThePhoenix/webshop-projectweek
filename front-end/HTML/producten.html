@@ -128,6 +128,47 @@
                 height: 90px;  /* Increased from 60px to 90px */
             }
         }
+        
+        /* Shopping Cart Styles */
+        .cart-container {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Animation for add to cart */
+        @keyframes cartBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .cart-animation {
+            animation: cartBounce 0.5s;
+        }
     </style>
 </head>
 <body>
@@ -152,6 +193,12 @@
                         <!-- Will be filled by session.js -->
                     </ul>
                 </div>
+            </div>
+            <!-- Shopping Cart Icon -->
+            <div class="cart-container">
+                <a href="../pages/cart/cart.html" class="cart-icon">
+                    &#128722; <span class="cart-count">0</span>
+                </a>
             </div>
         </div>
         <div id="user-greeting" class="user-greeting"></div>
@@ -229,8 +276,9 @@
         <p><a href="#">Algemene voorwaarden</a></p>
     </footer>
     
-    <!-- Include session management -->
+    <!-- Include session management and cart management -->
     <script src="../js/session.js"></script>
+    <script src="../js/cart.js"></script>
     
     <!-- Vue.js Application Script -->
     <script>
@@ -273,6 +321,9 @@
         $(document).ready(function() {
             // Declare products array globally
             let allProducts = [];
+            
+            // Update cart count when page loads
+            updateCartCount();
             
             // Load products function
             function loadProducts() {
@@ -334,8 +385,27 @@
                 // Event handler voor "In winkelwagen" knoppen
                 $('.add-to-cart').click(function() {
                     const productId = $(this).data('id');
-                    alert('Product toegevoegd aan winkelwagen! (Product ID: ' + productId + ')');
-                    // Hier zou je normaal gesproken een functie aanroepen om het product aan de winkelwagen toe te voegen
+                    const product = allProducts.find(p => p.id == productId);
+                    
+                    if (product) {
+                        // Add to cart
+                        addToCart(product);
+                        
+                        // Show animation feedback
+                        $('.cart-icon').addClass('cart-animation');
+                        setTimeout(() => {
+                            $('.cart-icon').removeClass('cart-animation');
+                        }, 500);
+                        
+                        // Show success message instead of alert
+                        const button = $(this);
+                        const originalText = button.text();
+                        button.text('Toegevoegd!').addClass('added');
+                        
+                        setTimeout(() => {
+                            button.text(originalText).removeClass('added');
+                        }, 1500);
+                    }
                 });
             }
             

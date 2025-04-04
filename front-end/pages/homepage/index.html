@@ -31,6 +31,57 @@
                 height: 90px;  /* Increased from 60px to 90px */
             }
     }
+    
+    /* Group user controls together like in other pages */
+    .user-controls {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Shopping Cart Styling - Updated to match products page */
+    .cart-container {
+        margin-left: 15px;
+        position: relative;
+    }
+    
+    .cart-icon {
+        font-size: 24px;
+        text-decoration: none;
+        color: #333;
+        position: relative;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    @keyframes cartBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .cart-animation {
+        animation: cartBounce 0.5s;
+    }
   </style>
 </head>
 <body>
@@ -48,14 +99,22 @@
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
-      <div class="profile-container">
-        <input type="checkbox" id="profile-toggle" hidden>
-        <label for="profile-toggle" class="profile-btn">&#128100;</label>
-        <div class="profile-menu">
-          <ul>
-            <li><a href="../login/login.html">Log in</a></li>
-            <li><a href="../register/register.html">Registratie</a></li>
-          </ul>
+      <div class="user-controls">
+        <div class="profile-container">
+          <input type="checkbox" id="profile-toggle" hidden>
+          <label for="profile-toggle" class="profile-btn">&#128100;</label>
+          <div class="profile-menu">
+            <ul>
+              <li><a href="../login/login.html">Log in</a></li>
+              <li><a href="../register/register.html">Registratie</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Shopping Cart Icon -->
+        <div class="cart-container">
+          <a href="../cart/cart.html" class="cart-icon">
+            &#128722; <span class="cart-count">0</span>
+          </a>
         </div>
       </div>
     </div>
@@ -93,5 +152,6 @@
   <!-- JS Code -->
   <script src="JS/textFX.js"></script>
   <script src="JS/aanbevolen.js"></script>
+  <script src="../../js/cart.js"></script>
 </body>
 </html>

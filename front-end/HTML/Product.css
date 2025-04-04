@@ -19,9 +19,15 @@ header {
     justify-content: space-between;
 }
 
-header h1 {
-    font-size: 24px;
-    color: #333;
+/* Logo, navigation and user controls layout */
+header nav {
+    margin: 0 auto 0 40px; /* Give some space after logo, but keep nav left-aligned */
+}
+
+/* Group user controls together */
+.user-controls {
+    display: flex;
+    align-items: center;
 }
 
 /* Navigation styling */
@@ -45,6 +51,7 @@ header nav ul li a {
 /* Profile container and dropdown styling */
 .profile-container {
     position: relative;
+    margin-right: 10px; /* Add space between profile and cart */
 }
 
 .profile-btn {
@@ -179,6 +186,55 @@ header nav ul li a {
     left: 0;
     right: 0;
     width: calc(100% - 2rem);
+}
+
+/* Add to cart button states */
+.add-to-cart.added {
+    background-color: #2E7D32;
+}
+
+/* Shopping cart icon in header */
+.cart-container {
+    margin-left: 0; /* Remove the left margin that was pushing it away */
+    position: relative;
+}
+
+.cart-icon {
+    font-size: 24px;
+    text-decoration: none;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+@keyframes cartBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.cart-animation {
+    animation: cartBounce 0.5s;
 }
 
 /* Responsive Design */
