@@ -111,6 +111,7 @@
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="../../HTML/producten.html">Producten</a></li>
+          <li><a href="../../../API-chatbot/public/chatbot.html">Chatbot</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
@@ -161,6 +162,26 @@
     </section>
   </main>
 
+  <!-- Chatbot Widget -->
+  <div class="chatbot-widget">
+    <div class="chatbot-toggle" id="chatbot-toggle">
+      <span>💬</span>
+    </div>
+    <div class="chatbot-container" id="chatbot-container">
+      <div class="chatbot-header">
+        <h3>Apothecare Chatbot</h3>
+        <button class="close-chatbot" id="close-chatbot">×</button>
+      </div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-area">
+        <form id="chat-form">
+          <input type="text" id="chat-input" placeholder="Typ een bericht...">
+          <button type="submit" id="chat-submit">➤</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
@@ -171,5 +192,9 @@
   <script src="JS/textFX.js"></script>
   <script src="JS/aanbevolen.js"></script>
   <script src="../../js/cart.js"></script>
+  
+  <!-- Chatbot Scripts and Styles -->
+  <link rel="stylesheet" href="../../API chatbot/public/chatbot.css">
+  <script src="../../API chatbot/public/chatbot.js"></script>
 </body>
 </html>
