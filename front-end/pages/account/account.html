@@ -22,6 +22,60 @@
                 height: 90px;  /* Increased from 60px to 90px */
             }
     }
+    
+    /* Group user controls together */
+    .user-controls {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Fix cart container positioning */
+    .cart-container {
+        margin-left: 15px;
+        position: relative;
+    }
+    
+    /* Shopping Cart Styles to match products page */
+    .cart-icon {
+        font-size: 24px;
+        text-decoration: none;
+        color: #333;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    /* Animation for add to cart */
+    @keyframes cartBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    
+    .cart-animation {
+        animation: cartBounce 0.5s;
+    }
   </style>
 </head>
 <body>
@@ -38,20 +92,22 @@
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
-      <div class="profile-container">
-        <input type="checkbox" id="profile-toggle" hidden>
-        <label for="profile-toggle" class="profile-btn">&#128100;</label>
-        <div class="profile-menu">
-          <ul>
-            <!-- Deze wordt dynamisch ingevuld door session.js -->
-          </ul>
+      <div class="user-controls">
+        <div class="profile-container">
+          <input type="checkbox" id="profile-toggle" hidden>
+          <label for="profile-toggle" class="profile-btn">&#128100;</label>
+          <div class="profile-menu">
+            <ul>
+              <!-- Deze wordt dynamisch ingevuld door session.js -->
+            </ul>
+          </div>
         </div>
-      </div>
-      <!-- Shopping Cart Icon -->
-      <div class="cart-container">
-        <a href="../cart/cart.html" class="cart-icon">
-          &#128722; <span class="cart-count">0</span>
-        </a>
+        <!-- Shopping Cart Icon -->
+        <div class="cart-container">
+          <a href="../cart/cart.html" class="cart-icon">
+            &#128722; <span class="cart-count">0</span>
+          </a>
+        </div>
       </div>
     </div>
     <div id="user-greeting" class="user-greeting"></div>

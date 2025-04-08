@@ -82,6 +82,24 @@
     .cart-animation {
         animation: cartBounce 0.5s;
     }
+    
+    /* Updated header layout - navigation to the left */
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+    
+    header nav {
+        margin-left: 20px;
+        margin-right: auto;
+    }
+    
+    header nav ul {
+        display: flex;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -89,9 +107,6 @@
   <!-- Header contents -->
   <header>
     <div class="header-content">
-      <a href="index.html">
-        <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
-      </a>
       <nav>
         <ul>
           <li><a href="#">Home</a></li>
@@ -99,6 +114,9 @@
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
+      <a href="index.html">
+        <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+      </a>
       <div class="user-controls">
         <div class="profile-container">
           <input type="checkbox" id="profile-toggle" hidden>

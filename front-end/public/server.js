@@ -1,30 +1,44 @@
-const { OpenAI } = require("openai")
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { OpenAI } = require("openai");
 
 const openai = new OpenAI({
-    // replace your-api-key with your API key from ChatGPT
-    apiKey: 'your-api-key'
-})
+    apiKey: process.env.OPENAI_API_KEY
+});
 
-app.post('/chat', async (req, res)=> {   
+const app = express(); // ✅ MOVE THIS UP BEFORE USING `app`
+
+const PORT = 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// OpenAI config
+const openai = new OpenAI({
+    //
+});
+
+// Chat endpoint
+app.post('/chat', async (req, res) => {
     try {
-      const resp = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-          messages: [
-            { role: "user", content: req.body.question}
-          ]  
-      })           
-  
-      res.status(200).json({message: resp.choices[0].message.content})
-    } catch(e) {
-        res.status(400).json({message: e.message})
+        const resp = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [
+                { role: "user", content: req.body.question }
+            ]
+        });
+
+        res.status(200).json({ message: resp.choices[0].message.content });
+    } catch (e) {
+        console.error(e);
+        res.status(400).json({ message: e.message });
     }
-  })
+});
 
-const express =  require('express')
-const app = express()
-
-app.use(express.static('public'))
-
-app.listen(5000, ()=> {
-    console.log("Server is active")
-})
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
