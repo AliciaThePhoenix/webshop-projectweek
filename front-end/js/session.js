@@ -1,62 +1,66 @@
-// Check login status when document is loaded
+// Controleert de inlogstatus wanneer het document is geladen
 document.addEventListener('DOMContentLoaded', function() {
+  // Roept de functie aan om de inlogstatus te controleren
   checkLoginStatus();
 });
 
-// Function to check if user is logged in
+// Functie om te controleren of de gebruiker is ingelogd
 function checkLoginStatus() {
-  // Using absolute path from server root to ensure it works from any page
+  // Gebruikt een absoluut pad vanaf de serverroot om te zorgen dat het werkt vanaf elke pagina
   fetch('/Hakathon/webshop-projectweek/back-end/database/check_login.php')
     .then(response => response.json())
     .then(data => {
+      // Werk de UI bij op basis van de inlogstatus
       updateUI(data);
     })
     .catch(error => {
+      // Log eventuele fouten naar de console
       console.error('Error checking login status:', error);
     });
 }
 
-// Update UI based on login status
+// Update de UI op basis van de inlogstatus
 function updateUI(data) {
+  // Haalt het profielmenu en de gebruikersgroet op
   const profileMenu = document.querySelector('.profile-menu ul');
   const userGreeting = document.getElementById('user-greeting');
   
   if (data.loggedin) {
-    // User is logged in
+    // Gebruiker is ingelogd
     profileMenu.innerHTML = `
       <li><span>Welkom, ${data.username}</span></li>
       <li><a href="/Hakathon/webshop-projectweek/front-end/pages/account/account.html">Mijn account</a></li>
       <li><a href="/Hakathon/webshop-projectweek/back-end/database/logout.php">Uitloggen</a></li>
     `;
     
-    // Update greeting text if it exists
+    // Update begroetingstekst als deze bestaat
     if (userGreeting) {
       userGreeting.textContent = `Welkom, ${data.username}!`;
       userGreeting.style.display = 'block';
     }
     
-    // Add 'logged-in' class to body for additional styling if needed
+    // Voeg een 'logged-in' klasse toe aan body voor extra styling indien nodig
     document.body.classList.add('logged-in');
     
-    // Show admin options if user is admin
+    // Toon admin-opties als de gebruiker admin is
     if (data.is_admin) {
-      // Add admin-specific menu items
+      // Voeg admin-specifieke menu-items toe
       profileMenu.innerHTML += `<li><a href="#">Admin Panel</a></li>`;
       document.body.classList.add('admin-user');
     }
   } else {
-    // User is not logged in
+    // Gebruiker is niet ingelogd
     profileMenu.innerHTML = `
       <li><a href="/Hakathon/webshop-projectweek/front-end/pages/login/login.html">Log in</a></li>
       <li><a href="/Hakathon/webshop-projectweek/front-end/pages/register/register.html">Registratie</a></li>
     `;
     
-    // Hide greeting text if it exists
+    // Verberg begroetingstekst als deze bestaat
     if (userGreeting) {
       userGreeting.style.display = 'none';
     }
     
-    // Remove 'logged-in' class from body
+    // Verwijder 'logged-in' en 'admin-user' klassen van body
     document.body.classList.remove('logged-in');
     document.body.classList.remove('admin-user');
   }

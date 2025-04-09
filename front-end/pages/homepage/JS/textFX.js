@@ -1,16 +1,27 @@
+// Deze code wordt uitgevoerd zodra de DOM volledig is geladen (alle HTML-elementen zijn beschikbaar)
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Splitting.js (this automatically splits text based on the data-splitting attribute)
+    // Initialiseert de Splitting.js bibliotheek
+    // Deze splitst text op in individuele letters op basis van het data-splitting attribuut
     Splitting();
     
-    // Select all generated character elements
+    // Selecteert alle individuele tekens die door Splitting.js zijn gegenereerd
     const chars = document.querySelectorAll('.animated-text .char');
+    
+    // Voor elk teken voeren we de volgende acties uit
     chars.forEach((char, index) => {
-      // Generate a small random offset (between -5px and 5px) for each axis
+      // Genereert een willekeurige offset tussen -5px en 5px voor de x-as
+      // toFixed(2) rondt af op 2 decimalen voor betere prestaties
       const offsetX = (Math.random() * 10 - 5).toFixed(2) + 'px';
+      
+      // Genereert een willekeurige offset tussen -5px en 5px voor de y-as
       const offsetY = (Math.random() * 10 - 5).toFixed(2) + 'px';
+      
+      // Stelt CSS-variabelen in die in de CSS-animatie worden gebruikt
       char.style.setProperty('--offset-x', offsetX);
       char.style.setProperty('--offset-y', offsetY);
-      // Set a staggered delay for each letter
+      
+      // Stelt een vertraagde start in voor elk teken (50ms per teken)
+      // Dit zorgt voor het getrapte animatie-effect
       char.style.animationDelay = `${index * 0.05}s`;
     });
-  });
+});
