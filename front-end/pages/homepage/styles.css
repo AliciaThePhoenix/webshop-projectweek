@@ -1,0 +1,383 @@
+/* Modern color scheme */
+:root {
+    --primary-color: #4CAF50;
+    --primary-light: #87E5B0;
+    --primary-dark: #45a049;
+    --secondary-color: #2196F3;
+    --accent-color: #FF4081;
+    --background-light: #f8f9fa;
+    --text-dark: #333;
+    --text-light: #666;
+    --card-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    --hover-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* Reset and basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+}
+
+/* Header styling */
+header {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    padding: 20px;
+    position: relative;
+    box-shadow: var(--card-shadow);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+}
+
+/* Updated navigation positioning */
+header nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+}
+
+/* Navigation styling */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-2px);
+}
+
+nav ul li a.active {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Profile container and dropdown styling */
+.profile-container {
+    position: relative;
+}
+
+.profile-btn {
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.profile-btn:hover {
+    transform: scale(1.1);
+    color: var(--primary-color);
+}
+
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    width: 150px;
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.profile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.profile-menu ul li {
+    padding: 10px 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.profile-menu ul li:hover {
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.profile-menu ul li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    display: block;
+    font-weight: 500;
+}
+
+#profile-toggle:checked ~ .profile-menu {
+    max-height: 200px;
+}
+
+/* Centered container for search section */
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    padding: 40px 20px;
+}
+
+/* Search section styling */
+.search-section {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.8s ease-out;
+}
+
+.animated-text-container {
+    margin-bottom: 25px;
+    margin-top: 20%;
+    color: var(--text-dark);
+    font-size: 52px;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.animated-text .char {
+    display: inline-block;
+    transform: translate(var(--offset-x), var(--offset-y));
+    opacity: 0;
+    animation: letterAnimation 0.5s ease-in-out forwards;
+}
+
+@keyframes letterAnimation {
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+.search-container input[type="text"] {
+    width: 450px;
+    padding: 15px 20px;
+    border: 2px solid var(--primary-light);
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search-container input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Recommended section styling */
+.recommended-section {
+    width: 100%;
+    padding: 40px 20px;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.recommended-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 32px;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.recommended-container {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    padding: 20px;
+    scrollbar-width: none;
+}
+
+.recommended-container::-webkit-scrollbar {
+    display: none;
+}
+
+.recommended-item {
+    flex: 0 0 auto;
+    width: 220px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.recommended-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.recommended-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.recommended-item:hover img {
+    transform: scale(1.05);
+}
+
+.recommended-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.recommended-item p {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/* Footer styling */
+footer {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
+
+/* User greeting styling */
+.user-greeting {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    display: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: var(--card-shadow);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Additional styles for logged-in state */
+body.logged-in .profile-btn {
+    color: var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Shopping Cart Styling */
+.cart-container {
+    margin-left: 15px;
+    position: relative;
+}
+
+.cart-icon {
+    font-size: 24px;
+    text-decoration: none;
+    color: var(--text-dark);
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+    color: var(--primary-color);
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .search-container input[type="text"] {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .animated-text-container {
+        font-size: 36px;
+    }
+    
+    .recommended-item {
+        width: 180px;
+    }
+    
+    nav ul {
+        gap: 10px;
+    }
+    
+    nav ul li a {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Apothecare</title>
+    <link rel="stylesheet" href="../HTML/Product.css">
+    <link rel="stylesheet" href="../CSS/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Session management -->
+    <script src="../js/session.js"></script>
+
+    <style>
+        /* Logo styling */
+        .logo-img {
+            height: 120px;
+            width: auto;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 90px;
+            }
+        }
+        
+        /* Fix header layout - Group user controls together */
+        .user-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Fix cart container positioning */
+        .cart-container {
+            margin-left: 15px;
+        }
+        
+        /* Ensure the navigation stays centered */
+        .header-content {
+            position: relative;
+        }
+        
+        header nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header contents -->
+    <header>
+        <div class="header-content">
+            <a href="../pages/homepage/index.html">
+                <img src="../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="../pages/homepage/index.html">Home</a></li>
+                    <li><a href="producten.html">Producten</a></li>
+                    <li><a href="chatbot.html">Gezondheidsadviseur</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <div class="profile-container">
+                    <input type="checkbox" id="profile-toggle" hidden>
+                    <label for="profile-toggle" class="profile-btn">&#128100;</label>
+                    <div class="profile-menu">
+                        <ul>
+                            <!-- Will be filled by session.js -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="cart-container">
+                    <a href="../pages/cart/cart.html" class="cart-icon">
+                        &#128722; <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="user-greeting" class="user-greeting"></div>
+    </header>
+
+    <main class="contact-main">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h1>Neem Contact Op</h1>
+                <p>Heeft u vragen of opmerkingen? Neem gerust contact met ons op!</p>
+                
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Bezoek ons</h3>
+                        <p>Apotheekstraat 123<br>1234 AB Amsterdam</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <i class="fas fa-phone"></i>
+                        <h3>Bel ons</h3>
+                        <p>Tel: 0123-456789<br>Ma-Vr: 8:00 - 20:00<br>Za: 9:00 - 17:00</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Mail ons</h3>
+                        <p>info@apothecare.nl<br>Reactie binnen 24 uur</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Stuur ons een bericht</h2>
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Naam</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Onderwerp</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Bericht</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Verstuur Bericht</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> info@apothecare.nl</p>
+                <p><i class="fas fa-phone"></i> 0123-456789</p>
+            </div>
+            <div class="footer-section">
+                <h3>Openingstijden</h3>
+                <p>Ma-Vr: 8:00 - 20:00</p>
+                <p>Za: 9:00 - 17:00</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <p><a href="#">Algemene voorwaarden</a></p>
+                <p><a href="#">Privacy beleid</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Apothecare - Uw online apotheek</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/cart.js"></script>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Show success message
+            alert('Bedankt voor uw bericht! We nemen zo spoedig mogelijk contact met u op.');
+            
+            // Clear form
+            event.target.reset();
+        }
+    </script>
+</body>
+</html> 

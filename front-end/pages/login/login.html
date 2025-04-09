@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inloggen - Apothecare Webshop</title>
   <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../../HTML/Product.css">
   <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
   <script src="../../components/stadium.js" defer></script>
   <script src="../../js/session.js"></script>
+  <link rel="stylesheet" href="../../CSS/shared-footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     /* Logo styling */
@@ -64,7 +67,8 @@
         <ul>
           <li><a href="../homepage/index.html">Home</a></li>
           <li><a href="../../HTML/producten.html">Producten</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="../../HTML/chatbot.html">Gezondheidsadviseur</a></li>
+          <li><a href="../../HTML/contact.html">Contact</a></li>
         </ul>
       </nav>
       <div class="user-controls">
@@ -73,8 +77,7 @@
           <label for="profile-toggle" class="profile-btn">&#128100;</label>
           <div class="profile-menu">
             <ul>
-              <li><a href="login.html">Log in</a></li>
-              <li><a href="../register/register.html">Registratie</a></li>
+              <!-- Will be filled by session.js -->
             </ul>
           </div>
         </div>
@@ -86,6 +89,7 @@
         </div>
       </div>
     </div>
+    <div id="user-greeting" class="user-greeting"></div>
   </header>
 
   <!-- Main Content -->
@@ -116,8 +120,26 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
-    <p><a href="#">Algemene voorwaarden</a></p>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-envelope"></i> info@apothecare.nl</p>
+            <p><i class="fas fa-phone"></i> 0123-456789</p>
+        </div>
+        <div class="footer-section">
+            <h3>Openingstijden</h3>
+            <p>Ma-Vr: 8:00 - 20:00</p>
+            <p>Za: 9:00 - 17:00</p>
+        </div>
+        <div class="footer-section">
+            <h3>Links</h3>
+            <p><a href="#">Algemene voorwaarden</a></p>
+            <p><a href="#">Privacy beleid</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Apothecare - Uw online apotheek</p>
+    </div>
   </footer>
 
   <!-- JS Code -->

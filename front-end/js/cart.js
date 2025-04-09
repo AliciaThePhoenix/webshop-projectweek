@@ -35,12 +35,23 @@ function addToCart(product) {
         // Als het product al bestaat, verhoog dan het aantal
         existingItem.quantity = (existingItem.quantity || 1) + 1;
     } else {
-        // Anders voeg een nieuw product toe met hoeveelheid 1
+        // Get the absolute path for the image URL
+        let imageUrl = product.image_url;
+        
+        // If it's a relative path, convert it to absolute
+        if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('data:')) {
+            // Remove any '../' from the start of the path
+            imageUrl = imageUrl.replace(/^\.\.\/+/, '');
+            // Ensure the path starts from the root of your project
+            imageUrl = '/Hakathon/webshop-projectweek/' + imageUrl;
+        }
+        
+        // Add the new item with the processed image URL
         cart.push({
             id: product.id,
             name: product.name,
             price: product.price,
-            image_url: product.image_url || '../images/placeholder.jpg',
+            image_url: imageUrl,
             quantity: 1
         });
     }
@@ -134,3 +145,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Zorgt ervoor dat het aantal items in de winkelwagen correct wordt weergegeven
     updateCartCount();
 });
+
+function handleAddToCart(button) {
+    const productCard = button.closest('.product-card');
+    
+    // Get the image source directly from the product card's image element
+    const productImage = productCard.querySelector('img');
+    const imageUrl = productImage ? productImage.src : null;
+    
+    // Create the product object with the correct image URL
+    const product = {
+        id: productCard.dataset.productId,
+        name: productCard.dataset.productName,
+        price: parseFloat(productCard.dataset.productPrice),
+        image_url: imageUrl || '../images/placeholder.jpg',
+        quantity: 1
+    };
+
+    addToCart(product);
+
+    // Show feedback to user
+    const originalText = button.textContent;
+    button.textContent = "Toegevoegd!";
+    button.classList.add("added");
+    
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove("added");
+    }, 2000);
+}

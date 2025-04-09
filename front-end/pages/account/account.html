@@ -4,10 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mijn Account - Apothecare Webshop</title>
-  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="accounte.css">
+  <link rel="stylesheet" href="../../HTML/Product.css">
   <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
+  <link rel="stylesheet" href="../../CSS/floating-chatbot.css">
+  <link rel="stylesheet" href="../../CSS/shared-footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="../../components/stadium.js" defer></script>
   <script src="../../js/session.js"></script>
+  <script src="../../js/floating-chatbot.js"></script>
   
   <style>
     /* Logo styling */
@@ -89,7 +94,8 @@
         <ul>
           <li><a href="../homepage/index.html">Home</a></li>
           <li><a href="../../HTML/producten.html">Producten</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="../../HTML/chatbot.html">Gezondheidsadviseur</a></li>
+          <li><a href="../../HTML/contact.html">Contact</a></li>
         </ul>
       </nav>
       <div class="user-controls">
@@ -116,74 +122,92 @@
   <!-- Main Content -->
   <main>
     <div class="account-container">
-      <h2>Mijn Account</h2>
+      <h2 class="page-title">Mijn Account Dashboard</h2>
       
       <div class="account-dashboard">
         <section class="account-info">
-          <h3>Persoonlijke Gegevens</h3>
-          <div id="loading-user-info">Gegevens laden...</div>
+          <div class="section-header">
+            <h3><i class="fas fa-user-circle"></i> Persoonlijke Gegevens</h3>
+          </div>
+          <div id="loading-user-info" class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Gegevens laden...</p>
+          </div>
           <div id="user-info" class="hidden">
-            <div class="info-group">
-              <label>Gebruikersnaam:</label>
-              <span id="username-field">-</span>
+            <div class="info-card">
+              <div class="info-group">
+                <label><i class="fas fa-user"></i> Gebruikersnaam:</label>
+                <span id="username-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-envelope"></i> E-mail:</label>
+                <span id="email-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-id-card"></i> Naam:</label>
+                <span id="name-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-home"></i> Adres:</label>
+                <span id="address-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-map-marker"></i> Postcode:</label>
+                <span id="postal-code-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-city"></i> Plaats:</label>
+                <span id="city-field" class="info-value">-</span>
+              </div>
+              <div class="info-group">
+                <label><i class="fas fa-phone"></i> Telefoonnummer:</label>
+                <span id="phone-field" class="info-value">-</span>
+              </div>
             </div>
-            <div class="info-group">
-              <label>E-mail:</label>
-              <span id="email-field">-</span>
-            </div>
-            <div class="info-group">
-              <label>Naam:</label>
-              <span id="name-field">-</span>
-            </div>
-            <div class="info-group">
-              <label>Adres:</label>
-              <span id="address-field">-</span>
-            </div>
-            <div class="info-group">
-              <label>Postcode:</label>
-              <span id="postal-code-field">-</span>
-            </div>
-            <div class="info-group">
-              <label>Plaats:</label>
-              <span id="city-field">-</span>
-            </div>
-            <div class="info-group">
-              <label>Telefoonnummer:</label>
-              <span id="phone-field">-</span>
-            </div>
-            <button id="edit-profile-btn" class="btn-primary">Gegevens Bewerken</button>
+            <button id="edit-profile-btn" class="btn-primary">
+              <i class="fas fa-edit"></i> Gegevens Bewerken
+            </button>
           </div>
         </section>
         
         <section class="order-history">
-          <h3>Bestelgeschiedenis</h3>
-          <div id="loading-orders">Bestellingen laden...</div>
+          <div class="section-header">
+            <h3><i class="fas fa-shopping-bag"></i> Bestelgeschiedenis</h3>
+          </div>
+          <div id="loading-orders" class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Bestellingen laden...</p>
+          </div>
           <div id="orders-container" class="hidden">
             <div class="order-stats">
               <div class="stat-box">
+                <i class="fas fa-box"></i>
                 <span class="stat-number" id="total-orders">0</span>
                 <span class="stat-label">Totale bestellingen</span>
               </div>
               <div class="stat-box">
+                <i class="fas fa-shopping-cart"></i>
                 <span class="stat-number" id="total-products">0</span>
                 <span class="stat-label">Totale producten</span>
               </div>
             </div>
-            <table id="orders-table">
-              <thead>
-                <tr>
-                  <th>Bestelnr.</th>
-                  <th>Datum</th>
-                  <th>Status</th>
-                  <th>Producten</th>
-                  <th>Totaal</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody id="orders-list">
-                <!-- Orders worden hier geladen -->
-              </tbody>
-            </table>
+            <div class="table-container">
+              <table id="orders-table">
+                <thead>
+                  <tr>
+                    <th>Bestelnr.</th>
+                    <th>Datum</th>
+                    <th>Status</th>
+                    <th>Producten</th>
+                    <th>Totaal</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-list">
+                  <!-- Orders worden hier geladen -->
+                </tbody>
+              </table>
+            </div>
             <p id="no-orders" class="hidden">U heeft nog geen bestellingen geplaatst.</p>
           </div>
         </section>
@@ -193,8 +217,26 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
-    <p><a href="#">Algemene voorwaarden</a></p>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-envelope"></i> info@apothecare.nl</p>
+            <p><i class="fas fa-phone"></i> 0123-456789</p>
+        </div>
+        <div class="footer-section">
+            <h3>Openingstijden</h3>
+            <p>Ma-Vr: 8:00 - 20:00</p>
+            <p>Za: 9:00 - 17:00</p>
+        </div>
+        <div class="footer-section">
+            <h3>Links</h3>
+            <p><a href="#">Algemene voorwaarden</a></p>
+            <p><a href="#">Privacy beleid</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Apothecare - Uw online apotheek</p>
+    </div>
   </footer>
 
   <!-- JS Code -->

@@ -4,32 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apothecare Webshop</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="../../components/stadium-css-varients/ver1.css">
+  <link rel="stylesheet" href="stylee.css">
+  <link rel="stylesheet" href="../../HTML/Product.css">
+  <link rel="stylesheet" href="../../CSS/floating-chatbot.css">
+  <link rel="stylesheet" href="../../CSS/shared-footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <!-- Frameworks -->
-  <!-- Used to individually edit characters from a text -->
   <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 
-  <!-- Components -->
-  <!-- Good luck ever finding a way not having to write this-->
-  <script src="../../components/stadium.js" defer></script>
-  
   <!-- Session management -->
   <script src="../../js/session.js"></script>
+  <script src="../../js/floating-chatbot.js"></script>
   
   <style>
     /* Logo styling */
     .logo-img {
-            height: 120px;  /* Increased from 80px to 120px */
-            width: auto;
-            margin: 10px 0; /* Added margin for better spacing */
+        height: 120px;
+        width: auto;
+        margin: 10px 0;
+    }
+    
+    @media (max-width: 768px) {
+        .logo-img {
+            height: 90px;
         }
-        
-        @media (max-width: 768px) {
-            .logo-img {
-                height: 90px;  /* Increased from 60px to 90px */
-            }
     }
     
     /* Group user controls together like in other pages */
@@ -47,22 +46,26 @@
     .cart-icon {
         font-size: 24px;
         text-decoration: none;
-        color: #333;
+        color: white;
         position: relative;
         display: inline-block;
         transition: transform 0.3s ease;
+        padding: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
     }
     
     .cart-icon:hover {
         transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.2);
     }
     
     .cart-count {
         position: absolute;
-        top: -10px;
-        right: -10px;
-        background-color: #4CAF50;
-        color: white;
+        top: -5px;
+        right: -5px;
+        background: white;
+        color: var(--primary-color, #4CAF50);
         border-radius: 50%;
         width: 20px;
         height: 20px;
@@ -71,6 +74,7 @@
         justify-content: center;
         font-size: 12px;
         font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     @keyframes cartBounce {
@@ -87,11 +91,13 @@
     .header-content {
         display: flex;
         align-items: center;
+        position: relative;
     }
     
     header nav {
-        margin-left: 20px;
-        margin-right: auto;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     header nav ul {
@@ -107,25 +113,24 @@
   <!-- Header contents -->
   <header>
     <div class="header-content">
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="../../HTML/producten.html">Producten</a></li>
-          <li><a href="../../HTML/chatbot.html">Gezondheidsadviseur</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
       <a href="index.html">
         <img src="../../../IMG/LOGO.png" alt="Apothecare Logo" class="logo-img">
       </a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="../../HTML/producten.html">Producten</a></li>
+          <li><a href="../../HTML/chatbot.html">Gezondheidsadviseur</a></li>
+          <li><a href="../../HTML/contact.html">Contact</a></li>
+        </ul>
+      </nav>
       <div class="user-controls">
         <div class="profile-container">
           <input type="checkbox" id="profile-toggle" hidden>
           <label for="profile-toggle" class="profile-btn">&#128100;</label>
           <div class="profile-menu">
             <ul>
-              <li><a href="../login/login.html">Log in</a></li>
-              <li><a href="../register/register.html">Registratie</a></li>
+              <!-- Will be filled by session.js -->
             </ul>
           </div>
         </div>
@@ -142,47 +147,154 @@
 
   <!-- Main Content -->
   <main>
-    <div class="centered-container">
-      <section class="search-section">
+    <div class="hero-section">
+      <div class="hero-content">
         <div class="animated-text-container">
           <div class="animated-text" data-splitting>Wat wilt u vandaag?</div>
         </div>
         <div class="search-container">
-          <input type="text" placeholder="Zoek hier...">
+          <input type="text" placeholder="Zoek medicijnen, symptomen of advies...">
+          <button class="search-btn"><i class="fas fa-search"></i></button>
         </div>
-      </section>
+      </div>
     </div>
 
-    <spawn-stadium count="3"></spawn-stadium>
+    <!-- Quick Access Categories -->
+    <section class="categories-section">
+      <h2>Snelle toegang tot zorg</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <i class="fas fa-pills"></i>
+          <h3>Medicijnen</h3>
+          <p>Bekijk ons assortiment</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-comments"></i>
+          <h3>Gezondheidsadvies</h3>
+          <p>Praat met onze AI-adviseur</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-heartbeat"></i>
+          <h3>Symptomen Check</h3>
+          <p>Controleer uw symptomen</p>
+        </div>
+        <div class="category-card">
+          <i class="fas fa-clock"></i>
+          <h3>Herhaalrecepten</h3>
+          <p>Eenvoudig bestellen</p>
+        </div>
+      </div>
+    </section>
     
-    <!-- Recommended section -->
-    <section class="recommended-section">
-      <h2>Aanbevolen</h2>
-      <div id="recommended-container" class="recommended-container"></div>
+    <!-- Featured Products -->
+    <section class="featured-section">
+      <h2>Aanbevolen Producten</h2>
+      <div class="featured-grid">
+        <div class="product-card" data-product-id="1" data-product-name="Paracetamol" data-product-price="2.99" data-product-image="../../../IMG/paracetamol.png">
+          <div class="product-badge">Populair</div>
+          <img src="../../../IMG/paracetamol.png" alt="Paracetamol">
+          <h3>Paracetamol</h3>
+          <p>Pijnstilling en koortsverlagend</p>
+          <div class="product-price">€2.99</div>
+          <button class="add-to-cart-btn" onclick="handleAddToCart(this)">In winkelwagen</button>
+        </div>
+        <div class="product-card" data-product-id="2" data-product-name="Vitamine C Complex" data-product-price="7.95" data-product-image="../../../IMG/vitaminec2.png">
+          <img src="../../../IMG/vitaminec2.png" alt="Vitamine C">
+          <h3>Vitamine C Complex</h3>
+          <p>Boost uw immuunsysteem</p>
+          <div class="product-price">€7.95</div>
+          <button class="add-to-cart-btn" onclick="handleAddToCart(this)">In winkelwagen</button>
+        </div>
+        <div class="product-card" data-product-id="3" data-product-name="Ibuprofen" data-product-price="3.49" data-product-image="../../../IMG/ibuprofen.png">
+          <img src="../../../IMG/ibuprofen.png" alt="Ibuprofen">
+          <h3>Ibuprofen</h3>
+          <p>Anti-ontstekingsmiddel</p>
+          <div class="product-price">€3.49</div>
+          <button class="add-to-cart-btn" onclick="handleAddToCart(this)">In winkelwagen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Health Tips Section -->
+    <section class="health-tips-section">
+      <h2>Gezondheidstips van onze experts</h2>
+      <div class="tips-grid">
+        <article class="tip-card">
+          <i class="fas fa-shield-virus"></i>
+          <h3>Versterk uw immuunsysteem</h3>
+          <p>Ontdek natuurlijke manieren om uw weerstand te verhogen</p>
+          <a href="#" class="read-more">Lees meer</a>
+        </article>
+        <article class="tip-card">
+          <i class="fas fa-brain"></i>
+          <h3>Mentale Gezondheid</h3>
+          <p>Tips voor een gezonde geest in een gezond lichaam</p>
+          <a href="#" class="read-more">Lees meer</a>
+        </article>
+        <article class="tip-card">
+          <i class="fas fa-heart"></i>
+          <h3>Hart Gezondheid</h3>
+          <p>Houd uw hart gezond met deze leefstijladviezen</p>
+          <a href="#" class="read-more">Lees meer</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Chat Assistant Promotion -->
+    <section class="chat-promo-section">
+      <div class="promo-content">
+        <div class="promo-text">
+          <h2>Persoonlijk gezondheidsadvies</h2>
+          <p>Praat met onze AI-gezondheidsadviseur voor direct advies en antwoorden op al uw vragen</p>
+          <a href="../../HTML/chatbot.html" class="chat-btn">Start een gesprek</a>
+        </div>
+        <div class="promo-image">
+          <i class="fas fa-robot"></i>
+        </div>
+      </div>
     </section>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Apothecare | Contact: info@apothecare.nl | Telefoon: 0123-456789</p>
-    <p><a href="#">Algemene voorwaarden</a></p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p><i class="fas fa-envelope"></i> info@apothecare.nl</p>
+        <p><i class="fas fa-phone"></i> 0123-456789</p>
+      </div>
+      <div class="footer-section">
+        <h3>Openingstijden</h3>
+        <p>Ma-Vr: 8:00 - 20:00</p>
+        <p>Za: 9:00 - 17:00</p>
+      </div>
+      <div class="footer-section">
+        <h3>Links</h3>
+        <p><a href="#">Algemene voorwaarden</a></p>
+        <p><a href="#">Privacy beleid</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Apothecare - Uw online apotheek</p>
+    </div>
   </footer>
 
-
-  <div class="container">
-    <h2>Chat with DeepSeek-r1:8b</h2>
-    <textarea id="prompt" rows="4" placeholder="schrijf je antwoord hier"></textarea>
-    <button onclick="submitPrompt()">Submit</button>
-    <div id="response">Response wil hier komen...</div>
-</div>
-
-<script src="script.js"></script>
-
-<script src="script.js"></script>
-  <!-- JS Code -->
+  <!-- Scripts -->
+  <script src="JS/script.js"></script>
   <script src="JS/textFX.js"></script>
-  <script src="JS/aanbevolen.js"></script>
   <script src="../../js/cart.js"></script>
+  <script src="../../js/chatbot.js"></script>
+  <script>
+    // Initialize the API endpoint and configuration
+    const API_CONFIG = {
+        endpoint: 'https://api.mistral.ai/v1/chat/completions',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer vHrsX9bWGF3AW7fR0hblwIQzSekJQHa1'
+        },
+        systemMessage: "Je bent een gezondheidsadviseur voor een apotheek. Geef korte, duidelijke antwoorden over gezondheid en medicijnen. Als je iets niet zeker weet, zeg dat dan."
+    };
+  </script>
 
 </body>
 </html>
